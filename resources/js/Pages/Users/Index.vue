@@ -1,66 +1,105 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import DangerButton from '@/Components/DangerButton.vue';
 import Pagination from '@/Components/Pagination.vue';
-import { Head } from '@inertiajs/vue3';
 
 const props = defineProps({
-	users: {
-		type: Object
-	}
-})
+    users: Object,
+});
+
+// Fonction pour supprimer un utilisateur
+const deleteUser = (userId) => {
+    if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
+        useForm().delete(route('users.destroy', userId));
+    }
+};
 </script>
 
 <template>
-	<Head title="Users" />
-	
-	<AuthenticatedLayout>
-		<template #header>
-			Users
-		</template>
-		
-		<div class="p-4 bg-white rounded-lg shadow-xs">
-			<div class="inline-flex overflow-hidden mb-4 w-full bg-white rounded-lg shadow-md">
-				<div class="flex justify-center items-center w-12 bg-blue-500">
-					<svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-						<path
-							d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM21.6667 28.3333H18.3334V25H21.6667V28.3333ZM21.6667 21.6666H18.3334V11.6666H21.6667V21.6666Z"></path>
-					</svg>
-				</div>
-				
-				<div class="px-4 py-2 -mx-3">
-					<div class="mx-3">
-						<span class="font-semibold text-blue-500">Info</span>
-						<p class="text-sm text-gray-600">Sample table page</p>
-					</div>
-				</div>
-			</div>
-			
-			<div class="overflow-hidden mb-8 w-full rounded-lg border shadow-xs">
-				<div class="overflow-x-auto w-full">
-					<table class="w-full whitespace-no-wrap">
-						<thead>
-							<tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase bg-gray-50 border-b">
-								<th class="px-4 py-3">Name</th>
-								<th class="px-4 py-3">Email</th>
-							</tr>
-						</thead>
-						<tbody class="bg-white divide-y">
-							<tr v-for="user in users.data" :key="user.id" class="text-gray-700">
-								<td class="px-4 py-3 text-sm">
-									{{ user.name }}
-								</td>
-								<td class="px-4 py-3 text-sm">
-									{{ user.email }}
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div
-					class="px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase bg-gray-50 border-t sm:grid-cols-9">
-					<pagination :links="users.links" />
-				</div>
-			</div>
-		</div>
-	</AuthenticatedLayout>
+    <Head title="Gestion des utilisateurs" />
+
+    <AuthenticatedLayout>
+        <template #header>
+            <div class="flex justify-between items-center">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Gestion des utilisateurs
+                </h2>
+                <Link
+                    :href="route('users.create')"
+                    class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-300 transition"
+                >
+                    Nouveau utilisateur
+                </Link>
+            </div>
+        </template>
+
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 bg-white border-b border-gray-200">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Nom
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Email
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Date de création
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Actions
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr v-for="user in users.data" :key="user.id">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                            {{ user.name }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ user.email }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ new Date(user.created_at).toLocaleDateString() }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <div class="flex space-x-2">
+                                                <Link 
+                                                    :href="route('users.edit', user.id)" 
+                                                    class="text-indigo-600 hover:text-indigo-900"
+                                                >
+                                                    Modifier
+                                                </Link>
+                                                <button 
+                                                    @click="deleteUser(user.id)"
+                                                    class="text-red-600 hover:text-red-900"
+                                                >
+                                                    Supprimer
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr v-if="users.data.length === 0">
+                                        <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                            Aucun utilisateur trouvé
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <Pagination :links="users.links" class="mt-6" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </AuthenticatedLayout>
 </template>
