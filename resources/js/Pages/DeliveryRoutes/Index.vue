@@ -77,16 +77,24 @@ const getStatusClass = (status) => {
     <AuthenticatedLayout>
         <template #header>
             <div class="flex justify-between items-center">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    Gestion des tournées
-                </h2>
-                <Link
-                    :href="route('delivery-routes.create')"
-                    class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-300 transition"
-                >
-                    Nouvelle tournée
-                </Link>
-            </div>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Gestion des tournées
+        </h2>
+        <div class="flex space-x-2">
+            <Link
+                :href="route('orders.create')"
+                class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-300 transition"
+            >
+                Nouvelle commande
+            </Link>
+            <Link
+                :href="route('delivery-routes.create')"
+                class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-300 transition"
+            >
+                Nouvelle tournée
+            </Link>
+        </div>
+    </div>
         </template>
 
         <div class="py-12">

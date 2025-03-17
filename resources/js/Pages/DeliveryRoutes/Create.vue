@@ -127,16 +127,24 @@ const formatDate = (dateString) => {
     <AuthenticatedLayout>
         <template #header>
             <div class="flex justify-between items-center">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    Créer une nouvelle tournée
-                </h2>
-                <Link
-                    :href="route('delivery-routes.index')"
-                    class="inline-flex items-center px-4 py-2 bg-gray-300 border border-transparent rounded-md font-semibold text-xs text-gray-800 uppercase tracking-widest hover:bg-gray-400 active:bg-gray-500 focus:outline-none focus:border-gray-500 focus:ring focus:ring-gray-300 transition"
-                >
-                    Retour
-                </Link>
-            </div>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Créer une nouvelle tournée
+        </h2>
+        <div class="flex space-x-2">
+            <Link
+                :href="route('orders.create')"
+                class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-300 transition"
+            >
+                Nouvelle commande
+            </Link>
+            <Link
+                :href="route('delivery-routes.index')"
+                class="inline-flex items-center px-4 py-2 bg-gray-300 border border-transparent rounded-md font-semibold text-xs text-gray-800 uppercase tracking-widest hover:bg-gray-400 active:bg-gray-500 focus:outline-none focus:border-gray-500 focus:ring focus:ring-gray-300 transition"
+            >
+                Retour
+            </Link>
+        </div>
+    </div>
         </template>
 
         <div class="py-12">
