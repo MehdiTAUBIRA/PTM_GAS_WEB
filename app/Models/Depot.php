@@ -22,7 +22,7 @@ class Depot extends Model
         'depotgpsy'
     ];
 
-    public $timestamps = true;
+    public $timestamps = false;
 
     public function employees()
     {

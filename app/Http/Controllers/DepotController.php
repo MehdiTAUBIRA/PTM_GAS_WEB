@@ -31,7 +31,7 @@ class DepotController extends Controller
     {
         $validated = $request->validate([
             'depotpostalcode' => 'required|max:10',
-            'depotcode' => 'required|max:4|unique:depots',
+            'depotcode' => 'required|max:4|unique:depot',
             'depotlabel' => 'required|max:30',
             'depotaddress' => 'required|max:50',
             'depotcity' => 'required|max:30',
