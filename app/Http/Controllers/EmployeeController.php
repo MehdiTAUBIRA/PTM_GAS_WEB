@@ -6,6 +6,7 @@ use App\Models\Employee;
 use App\Models\Depot;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use libphonenumber\PhoneNumberUtil;
 
 class EmployeeController extends Controller
 {
@@ -50,7 +51,7 @@ class EmployeeController extends Controller
             'employee_firstname' => 'required |Regex:/^[\D]+$/i|max:50',
             'employee_lastname' => 'required|Regex:/^[\D]+$/i||max:50',
             'employee_email' => 'required|email:rfc|max:100|unique:employee,employee_email',
-            'employee_phone' => 'nullable|Regex:/^[0-9 ]+$/i|sometimes|unique:employee,employee_phone',
+            'employee_phone' => 'nullable|phone:FR,US,NATIONAL|unique:employee,employee_phone',
             'employee_role' => 'required|in:admin,manager,inventory_clerk,warehouse_worker',
             'id_depot' => 'required|exists:depot,id_depot',
             'hire_date' => 'required|date',
