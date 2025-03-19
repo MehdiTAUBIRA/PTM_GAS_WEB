@@ -47,7 +47,7 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'employee_code' => 'required|Regex:/^[\D]+$/i|max:10|unique:employee,employee_code',
+            'employee_code' => 'required|alpha_num|max:10|unique:employee,employee_code',
             'employee_firstname' => 'required |Regex:/^[\D]+$/i|max:50',
             'employee_lastname' => 'required|Regex:/^[\D]+$/i||max:50',
             'employee_email' => 'required|email:rfc|max:100|unique:employee,employee_email',
